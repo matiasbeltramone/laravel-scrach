@@ -11,37 +11,41 @@
 |
 */
 
-Route::get('/', function () {
-    $tasks = [
-        'Go to the Market',
-        'Go to the Store',
-        'Go to Work',
-        'Go to the Concert'
-    ];
+Route::get('/', 'PagesController@home');
+Route::get('/about', 'PagesController@about');
+Route::get('/contact', 'PagesController@contact');
 
-    return view('welcome', [
-        'tasks' => $tasks,
-        'foo' => 'bar'
-    ]);
+//Route::get('/', function () { //This is a closure function
+//    $tasks = [
+//        'Go to the Market',
+//        'Go to the Store',
+//        'Go to Work',
+//        'Go to the Concert'
+//    ];
+//
+//    return view('welcome', [
+//        'tasks' => $tasks,
+//        'foo' => 'bar'
+//    ]);
+//
+//    /* Another ways...
+//        return view('welcome')->with([
+//            'tasks' => $tasks,
+//            'foo' => 'bar'
+//        ]);
+//
+//        OR
+//
+//        return view('welcome')
+//            ->withTasks($tasks)
+//            ->withFoo('bar');
+//    */
+//});
 
-    /* Another ways...
-        return view('welcome')->with([
-            'tasks' => $tasks,
-            'foo' => 'bar'
-        ]);
-
-        OR
-
-        return view('welcome')
-            ->withTasks($tasks)
-            ->withFoo('bar');
-    */
-});
-
-Route::get('/about', function () {
-    return view('about');
-});
-
-Route::get('/contact', function () {
-    return view('contact');
-});
+//Route::get('/about', function () {
+//    return view('about');
+//});
+//
+//Route::get('/contact', function () {
+//    return view('contact');
+//});
