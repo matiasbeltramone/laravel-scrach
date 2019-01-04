@@ -16,6 +16,7 @@ Route::get('/about', 'PagesController@about');
 Route::get('/contact', 'PagesController@contact');
 
 Route::get('/projects', 'ProjectsController@index');
+Route::post('/projects', 'ProjectsController@store');
 Route::get('/projects/create', 'ProjectsController@create');
 
 //Route::get('/', function () { //This is a closure function

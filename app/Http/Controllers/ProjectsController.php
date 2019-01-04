@@ -15,11 +15,12 @@ class ProjectsController extends Controller
 
     public function create()
     {
-        $project = new Project();
+        return view('projects.create');
+    }
 
-        $project->title = 'My Seconds Project';
-        $project->description = 'Lorem Ipsum';
-
-        $project->save();
+    public function store()
+    {
+        //Inmediatamente obtenemos un 419, ya que falta un token de authorización. (Esto sin el Token CSRF) Es un extra de seguridad
+        return request()->all();
     }
 }
