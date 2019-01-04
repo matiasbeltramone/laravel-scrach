@@ -15,6 +15,9 @@ Route::get('/', 'PagesController@home');
 Route::get('/about', 'PagesController@about');
 Route::get('/contact', 'PagesController@contact');
 
+Route::get('/projects', 'ProjectsController@index');
+Route::get('/projects/create', 'ProjectsController@create');
+
 //Route::get('/', function () { //This is a closure function
 //    $tasks = [
 //        'Go to the Market',
