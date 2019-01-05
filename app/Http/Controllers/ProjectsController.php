@@ -29,4 +29,37 @@ class ProjectsController extends Controller
 
         return redirect('/projects'); //Siempre hace un get el redirect.
     }
+
+    public function edit($id)
+    {
+        $project = Project::find($id);
+        
+        return view('projects.edit', compact('project'));
+    }
+
+    public function show()
+    {
+
+    }
+
+    public function update($id)
+    {
+        $project = Project::find($id);
+
+        $project->title = request('title');
+        $project->description = request('description');
+
+        $project->save();
+
+        return redirect('/projects');
+    }
+
+    public function destroy($id)
+    {
+        $project = Project::find($id);
+
+        $project->delete();
+
+        return redirect('/projects');
+    }
 }
