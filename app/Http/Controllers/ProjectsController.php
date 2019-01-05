@@ -20,6 +20,13 @@ class ProjectsController extends Controller
 
     public function store()
     {
+        // Si las validaciones fallan te redirigen a la misma pagina
+        request()->validate([
+            'title' => 'required|min:3|max:255',
+            'description' => 'required|min:3'
+        ]);
+
+        Project::create(request(['title', 'description']));
         //Esto asi va a fallar excepto que lo agreguemos en el model al mass assigment fillable
         // El cual te marca que campos pueden ser asignados masivamente o asignar el $guard = []
         // Esto se debe a que un usuario te puede agregar algun campo al form y enviarlo y si usas el all del request
@@ -29,10 +36,10 @@ class ProjectsController extends Controller
         //ya que puede reemplazarte el id, o los campos que pueda saber que existen del usuario tipo subscripción
         // El $fillable es mas deseable ya que te dice solo los campos estos pueden ser asignados mediante el create.
 
-        Project::create([
-            'title' => request('title'),
-            'description' => request('description')
-        ]);
+//        Project::create([
+//            'title' => request('title'),
+//            'description' => request('description')
+//        ]);
 
 //        $project = new Project();
 //
