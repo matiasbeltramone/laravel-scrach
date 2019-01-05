@@ -1,12 +1,12 @@
 @extends('layout')
 
 @section('content')
-    <h1 class="title">Edit Project</h1>
+    <h1 class="title" style="margin-top: 1em">Edit Project</h1>
     {{--
         Si nosotros mandamos esto asi de una el navegador no entiende y nos deja la petición en get por lo tanto hay
         que usar el method_field('PATCH') para que laravel sepa apesar de usar un POST en el browser que es un PATCH
     --}}
-    <form method="POST" action="/projects/{{ $project->id }}">
+    <form method="POST" action="/projects/{{ $project->id }}" style="margin-bottom: 1em">
         {{ method_field('PATCH') }}
         {{ csrf_field() }}
 
@@ -32,15 +32,16 @@
             </div>
         </div>
     </form>
-<form method="POST" action="/projects/{{ $project->id }}">
-    {{ method_field('DELETE') }}
-    {{ csrf_field() }}
 
-    <div class="field">
-        <div class="control">
-            <button type="submit" class="button is-link">Delete Project</button>
+    <form method="POST" action="/projects/{{ $project->id }}">
+        @method('DELETE')
+        @csrf
+
+        <div class="field">
+            <div class="control">
+                <button type="submit" class="button">Delete Project</button>
+            </div>
         </div>
-    </div>
-</form>
+    </form>
 
 @endsection
