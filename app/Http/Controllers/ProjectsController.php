@@ -20,7 +20,13 @@ class ProjectsController extends Controller
 
     public function store()
     {
-        //Inmediatamente obtenemos un 419, ya que falta un token de authorización. (Esto sin el Token CSRF) Es un extra de seguridad
-        return request()->all();
+        $project = new Project();
+
+        $project->title = request('title');
+        $project->description = request('description');
+
+        $project->save();
+
+        return redirect('/projects'); //Siempre hace un get el redirect.
     }
 }
