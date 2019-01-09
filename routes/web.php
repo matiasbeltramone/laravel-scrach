@@ -38,6 +38,7 @@ Route::get('/contact', 'PagesController@contact');
 
 Route::resource('projects', 'ProjectsController');
 
+Route::patch('/tasks/{task}', 'ProjectTasksController@update');
 //Route::get('/', function () { //This is a closure function
 //    $tasks = [
 //        'Go to the Market',
