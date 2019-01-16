@@ -10,8 +10,26 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+// Ejemplo de Service Container como resuelve Laravel que te trae la clase
+//use Illuminate\Filesystem\Filesystem;
+//
+//Route::get('/', function() {
+//   dd(app(FileSystem::class));
+//});
 
-Route::get('/', 'PagesController@home');
+//Otro ejemplo pero creando una clase con binding y luego mostrandola. Puede servir para interfaces
+//Permite meter clases/interfaces dentro del service container de Laravel
+app()->bind('example', function () { //Si queremos una sola instancia en lugar de bind usar singleton
+    return new \App\Example;
+});
+// Al hacer app('example') Lo primero que hace es fijarse en el container si existe un bind o singleton con ese name
+// Luego si no encuentra nada trata de resolver si es una clase existente tipo App\Example(funcionaria)
+// Esto se llama fallback
+Route::get('/', function() {
+   dd(app('example'), app('example')); //En este caso me crea dos instancias diferentes con identificadores distintos
+});
+
+//Route::get('/', 'PagesController@home');
 Route::get('/about', 'PagesController@about');
 Route::get('/contact', 'PagesController@contact');
 
