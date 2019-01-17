@@ -25,10 +25,11 @@
 // Al hacer app('example') Lo primero que hace es fijarse en el container si existe un bind o singleton con ese name
 // Luego si no encuentra nada trata de resolver si es una clase existente tipo App\Example(funcionaria)
 // Esto se llama fallback
-use App\Repositories\UserRepository;
+//use App\Repositories\UserRepository;
+//
 
-Route::get('/', function(UserRepository $users) {
-    dd($users);
+Route::get('/', function(\App\Services\Twitter $twitter) {
+    dd($twitter);
    return view('welcome'); //En este caso me crea dos instancias diferentes con identificadores distintos
 });
 
