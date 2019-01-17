@@ -28,12 +28,12 @@
 //use App\Repositories\UserRepository;
 //
 
-Route::get('/', function(\App\Services\Twitter $twitter) {
-    dd($twitter);
-   return view('welcome'); //En este caso me crea dos instancias diferentes con identificadores distintos
-});
+//Route::get('/', function(\App\Services\Twitter $twitter) {
+//    dd($twitter);
+//   return view('welcome'); //En este caso me crea dos instancias diferentes con identificadores distintos
+//});
 
-//Route::get('/', 'PagesController@home');
+Route::get('/', 'PagesController@home');
 Route::get('/about', 'PagesController@about');
 Route::get('/contact', 'PagesController@contact');
 
@@ -98,3 +98,7 @@ Route::delete('completed-tasks/{task}', 'CompletedTasksController@destroy');
 //Route::get('/contact', function () {
 //    return view('contact');
 //});
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
