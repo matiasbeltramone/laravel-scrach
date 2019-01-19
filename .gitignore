@@ -12,3 +12,5 @@ yarn-error.log
 .idea/
 error.log
 adminer.php
+composer.phar
+.composer/
