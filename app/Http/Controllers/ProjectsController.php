@@ -6,9 +6,16 @@ use App\Project;
 
 class ProjectsController extends Controller
 {
+    public function __construct()
+    {
+//        $this->middleware('auth')->except(['index']);
+//        $this->middleware('auth')->only(['store', 'update']);
+        $this->middleware('auth');
+    }
+
     public function index()
     {
-        $projects = Project::all();
+        $projects = Project::where('owner_id', auth()->id())->get();
 
         return view('projects.index', ['projects' => $projects]);
     }
@@ -21,12 +28,14 @@ class ProjectsController extends Controller
     public function store()
     {
         // Si las validaciones fallan te redirigen a la misma pagina
-        request()->validate([
+        $attributes = request()->validate([
             'title' => 'required|min:3|max:255',
             'description' => 'required|min:3'
         ]);
 
-        Project::create(request(['title', 'description']));
+        $attributes['owner_id'] = auth()->id();
+
+        Project::create($attributes);
         //Esto asi va a fallar excepto que lo agreguemos en el model al mass assigment fillable
         // El cual te marca que campos pueden ser asignados masivamente o asignar el $guard = []
         // Esto se debe a que un usuario te puede agregar algun campo al form y enviarlo y si usas el all del request
