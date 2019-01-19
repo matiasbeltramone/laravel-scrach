@@ -10,6 +10,12 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/', 'PagesController@home');
+Route::get('/about', 'PagesController@about');
+Route::get('/contact', 'PagesController@contact');
+
+
 // Ejemplo de Service Container como resuelve Laravel que te trae la clase
 //use Illuminate\Filesystem\Filesystem;
 //
@@ -33,9 +39,6 @@
 //   return view('welcome'); //En este caso me crea dos instancias diferentes con identificadores distintos
 //});
 
-Route::get('/', 'PagesController@home');
-Route::get('/about', 'PagesController@about');
-Route::get('/contact', 'PagesController@contact');
 
 /*
  * Convenciones en Laravel.
@@ -103,3 +106,14 @@ Route::delete('completed-tasks/{task}', 'CompletedTasksController@destroy');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+// Ejemplo para utilizar los notification que nos permiten enviar mails/mensaje de texto/ a slack o lo que sea necesario
+//Route::get('/', function() {
+//   $user = App\User::find(1);
+//
+//   $user->notify(new \App\Notifications\SubscriptionRenewalFailed());
+//   return 'Done';
+//});
+// En tinker podemos utilizar para llenar el campo read_at del notification
+// $user->notifications->first()->markAsRead();
+// Revisar la documentación que se pueden leer los no leidos con $user->unreadNotifications, entre otros metodos.

@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable; //$user->notify(new SubscriptionRenewalFailed);
 
     /**
      * The attributes that are mass assignable.
