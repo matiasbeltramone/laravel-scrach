@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ProjectCreated;
 use App\Project;
+use Illuminate\Support\Facades\Mail;
 
 class ProjectsController extends Controller
 {
@@ -19,6 +21,15 @@ class ProjectsController extends Controller
         //Otra opción
 //        $projects = Project::where('owner_id', auth()->id())->get();
 
+        //Clase Telescope usando el dump por detrás hace un var_dump
+//        dump($projects);
+        // Se puede utilizar algo de cache también en telescope pestaña cache y ver que acción hizo
+//        cache()->rememberForever('stats', function () {
+//            return ['lessons' => 1300, 'hours' => 50000, 'series' => 100];
+//        });
+        // Si queres revisar si existe la key stats y ver el hit en telescope
+//        $stats = cache()->get('stats');
+//        dump($stats);
         return view('projects.index', ['projects' => $projects]);
     }
 
@@ -37,7 +48,15 @@ class ProjectsController extends Controller
 
         $attributes['owner_id'] = auth()->id();
 
-        Project::create($attributes);
+        $project = Project::create($attributes);
+        // Para crear esta clase de mail php artisan make:mail ProjectCreated --markdown="mail.project-created" te hace la plantilla tmb pelado maravilloso
+        // Lo que puede pasar con los emails es que tarden unos segundos en enviarse por lo que relentizan el sistema y sería mejor pasarlo por queue
+        Mail::to($project->owner->email)->send(
+          new ProjectCreated($project)
+        ); // Para ver bien este email podemos ir al log (por el driver que pusimos en .env) o en telescope se puede ver la plantilla como renderizada
+
+        return redirect('/projects'); //Siempre hace un get el redirect.
+
         //Esto asi va a fallar excepto que lo agreguemos en el model al mass assigment fillable
         // El cual te marca que campos pueden ser asignados masivamente o asignar el $guard = []
         // Esto se debe a que un usuario te puede agregar algun campo al form y enviarlo y si usas el all del request
@@ -58,8 +77,6 @@ class ProjectsController extends Controller
 //        $project->description = request('description');
 //
 //        $project->save();
-
-        return redirect('/projects'); //Siempre hace un get el redirect.
     }
 
     public function edit(Project $project)

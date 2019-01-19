@@ -21,4 +21,9 @@ class Project extends Model
     {
         return $this->hasMany(Task::class);
     }
+
+    public function owner()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
