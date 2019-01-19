@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\ProjectCreated;
+use App\Events\ProjectCreated;
 use App\Project;
-use Illuminate\Support\Facades\Mail;
 
 class ProjectsController extends Controller
 {
@@ -49,11 +48,19 @@ class ProjectsController extends Controller
         $attributes['owner_id'] = auth()->id();
 
         $project = Project::create($attributes);
+        /*
+           Basicamente vimos 3 formas de enviar emails:
+            Directamente desde el controlador (Poca limpieza en el controller)
+            Mediante Eloquent Model Hooks (Mucho acoplamiento a eloquent)
+            Mediante Eventos (Pareciera ser el mas desacoplado y la mejor manera
+        */
+        event(new ProjectCreated($project));
+
         // Para crear esta clase de mail php artisan make:mail ProjectCreated --markdown="mail.project-created" te hace la plantilla tmb pelado maravilloso
         // Lo que puede pasar con los emails es que tarden unos segundos en enviarse por lo que relentizan el sistema y sería mejor pasarlo por queue
-        Mail::to($project->owner->email)->send(
-          new ProjectCreated($project)
-        ); // Para ver bien este email podemos ir al log (por el driver que pusimos en .env) o en telescope se puede ver la plantilla como renderizada
+//        Mail::to($project->owner->email)->send(
+//          new ProjectCreated($project)
+//        ); // Para ver bien este email podemos ir al log (por el driver que pusimos en .env) o en telescope se puede ver la plantilla como renderizada
 
         /*
          * Existen otras opciones que puede ser cuando crece mucho una aplicacion y eloquent provee
