@@ -55,6 +55,12 @@ class ProjectsController extends Controller
           new ProjectCreated($project)
         ); // Para ver bien este email podemos ir al log (por el driver que pusimos en .env) o en telescope se puede ver la plantilla como renderizada
 
+        /*
+         * Existen otras opciones que puede ser cuando crece mucho una aplicacion y eloquent provee
+         * Model Hooks
+        */
+
+
         return redirect('/projects'); //Siempre hace un get el redirect.
 
         //Esto asi va a fallar excepto que lo agreguemos en el model al mass assigment fillable
