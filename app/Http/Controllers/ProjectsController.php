@@ -67,7 +67,23 @@ class ProjectsController extends Controller
 
     public function show(Project $project)
     {
+        /* Authorize con Policies */
+        $this->authorize('update', $project);
+
         return view('projects.show', compact('project'));
+
+        // Otra forma es con Gates
+//        if (\Gate::denies('update', $project)) {
+//            abort(403);
+//        }
+
+        //Authorization de manera manual logica
+//        if ($project->owner_id !== auth()->id()) {
+//            abort(403);
+//        }
+
+        // abort_if($project->owner_id !== auth()->id(), 403);
+        // abort_unless(auth()->user()->owns($project), 403);
     }
 
     public function update(Project $project)

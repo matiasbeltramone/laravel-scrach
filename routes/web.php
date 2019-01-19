@@ -57,8 +57,9 @@ Route::get('/contact', 'PagesController@contact');
 //Route::delete('/projects/{id}', 'ProjectsController@destroy');
 
 // OR ANOTHER OPTION IT'S
-
 Route::resource('projects', 'ProjectsController');
+
+//Route::resource('projects', 'ProjectsController')->middleware('can:update,project');
 
 Route::post('projects/{project}/tasks', 'ProjectTasksController@store');
 Route::post('completed-tasks/{task}', 'CompletedTasksController@store');
