@@ -60,7 +60,21 @@ Route::get('/contact', 'PagesController@contact');
 //Route::delete('/projects/{id}', 'ProjectsController@destroy');
 
 // OR ANOTHER OPTION IT'S
-Route::resource('projects', 'ProjectsController');
+//Route::resource('projects', 'ProjectsController');
+
+/*
+ * Lección para flash messaging y dejar un mensaje de creado por 1 request
+ */
+Route::get('projects/create', function () {
+    return view('projects.create');
+});
+
+Route::post('projects', function() {
+    //session()->flash('message', 'Your project has been created.');// Esto lo guarda solo por 1 request + a diferencia del put
+
+    flash('Your project has been created'); //Gracias al archivo helpers.php
+    return redirect('/');
+});
 
 //Route::resource('projects', 'ProjectsController')->middleware('can:update,project');
 
@@ -117,3 +131,21 @@ Route::get('/home', 'HomeController@index')->name('home');
 // En tinker podemos utilizar para llenar el campo read_at del notification
 // $user->notifications->first()->markAsRead();
 // Revisar la documentación que se pueden leer los no leidos con $user->unreadNotifications, entre otros metodos.
+
+
+/**
+ * Lección para Sessions y Flash Messaging
+ * Because the web is stateless, we can use sessions as a mechanism for recording important user information
+ * from page to page.
+ * In this lesson, we'll review the basic sessions API and flash messaging
+ */
+
+//Route::get('/', function(\Illuminate\Http\Request $request) {
+    //PUT value on name key
+    //session(['name' => 'Deckard']);
+//    $request->session()->put('foobar', 'baz');
+    //GET value name
+    //session('name');
+
+//    return $request->session()->get('foobar');
+//});
