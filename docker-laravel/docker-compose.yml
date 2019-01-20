@@ -19,7 +19,7 @@ services:
         ipv4_address: 172.1.10.2
 
   phpnginx:
-    image: lbanchio/docker-php-nginx:7.1-16.04
+    image: matiasgb/php-nginx:php7.1
     hostname: dev
     links:
       - mysql
